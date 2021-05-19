@@ -1,5 +1,6 @@
 import { EVENT_LOAD, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "./events"
 import * as store from "./store"
+import _ from "lodash"
 
 
 declare const browser: any  // FIXME
@@ -17,10 +18,15 @@ async function onLoad( sender: any ) {
   }
 }
 
-async function onRequestHistory( sender: any ) {
-  console.debug( sender )
-  console.debug( sender.tab?.id )
-  const histories = store.load( sender.tab?.id )
+async function onRequestHistory() {
+  // Since `sender.tab` is undefined when sent from page/browser actions,
+  // We assume active tab is the one who sent the request
+  const tabs = await browser.tabs.query( { active: true, currentWindow: true } )
+  if ( _.isEmpty( tabs ) ) {
+    throw new Error( "Active tab not found" )
+  }
+
+  const histories = store.load( tabs[0].id )
   return {
     event: EVENT_RESPONSE_HISTORY,
     history: histories
@@ -33,9 +39,9 @@ browser.runtime.onMessage.addListener( ( message: any, sender: any, _response: n
   if ( message.event === EVENT_LOAD ) {
     return onLoad( sender )
   } else if ( message.event === EVENT_REQUEST_HISTORY ) {
-    return onRequestHistory( sender )
+    return onRequestHistory()
   } else {
-    console.debug( "unknown message" )
+    console.debug( `unknown message: ${message.event}` )
     return Promise.resolve()
   }
 } )

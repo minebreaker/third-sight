@@ -2,13 +2,13 @@ import { DateTime } from "luxon"
 
 
 // TODO: Apparently this code leaks memory. Need clean up
-type Store = {
+export type Store = {
   [tabId: number]: History[]
 }
 
-type History = {
+export type History = {
   tab: any,
-  timestamp: DateTime,
+  timestamp: number,
   objectUrl: string
 }
 
@@ -20,9 +20,9 @@ export function debug() {
 
 export function save( tab: any, objectUrl: string ) {
   // Tab id nullability should checked by content script
-  store[tab.id!] = [ {
+  store[tab.id!] = [ ...(store[tab.id!] || []), {
     tab,
-    timestamp: DateTime.now(),
+    timestamp: DateTime.now().toMillis(),
     objectUrl
   } ]
 }
