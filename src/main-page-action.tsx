@@ -10,14 +10,18 @@ declare const browser: any  // FIXME
 
 function App() {
 
-  const [ histories, setHistories ] = useState<History[]>( [] )
+  const [ histories, setHistories ] = useState<History[]>()
 
   useEffect( () => {
         browser.runtime.sendMessage( { event: EVENT_REQUEST_HISTORY } ).then( ( message: any ) => {
           if ( message.event === EVENT_RESPONSE_HISTORY ) {
             const histories = message.history as History[]
             console.debug( histories )
-            setHistories( histories )
+            setHistories( _.chain( histories )
+                           .dropRight( 1 ) // Removes current page
+                           .sortBy( history => history.timestamp )
+                           .reverse()
+                           .value() )
 
           } else {
             console.debug( message )
@@ -29,20 +33,22 @@ function App() {
 
   return (
       <div>
-        {_.isEmpty( histories )
+        {histories === undefined
             ? <p>Loading...</p>
-            : histories.map( history => (
-                <div style={{margin: "4px", border: "solid 1px black"}}>
-                  <p>{history.tab.title}</p>
-                  <p>{history.tab.url}</p>
-                  <p>{DateTime.fromMillis( history.timestamp ).toISO()}</p>
-                  <img src={history.objectUrl} style={{
-                    width: 400,
-                    height: 300,
-                    objectFit: "cover"
-                  }} />
-                </div>
-            ) )
+            : _.isEmpty( histories )
+                ? <p>The history is empty</p>
+                : histories.map( history => (
+                    <div style={{ margin: "4px", border: "solid 1px black" }}>
+                      <p>{history.tab.title}</p>
+                      <p>{history.tab.url}</p>
+                      <p>{DateTime.fromMillis( history.timestamp ).toISO()}</p>
+                      <img src={history.objectUrl} style={{
+                        width: 400,
+                        height: 300,
+                        objectFit: "cover"
+                      }} />
+                    </div>
+                ) )
         }
       </div>
   )
