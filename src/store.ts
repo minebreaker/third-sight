@@ -1,4 +1,5 @@
 import { DateTime } from "luxon"
+import _ from "lodash"
 
 
 // TODO: Apparently this code leaks memory. Need clean up
@@ -19,8 +20,16 @@ export function debug() {
 }
 
 export function save( tab: any, objectUrl: string ) {
+
+  // Some sites do clumsy state replacement and may send onComplete events multiple times.
+  const previousTab = _.last( store[tab.id] )
+  if ( previousTab && previousTab.tab.url === tab.url && previousTab.tab.title === tab.title ) {
+    console.debug( "duplicated entry" )
+    return
+  }
+
   // Tab id nullability should checked by content script
-  store[tab.id!] = [ ...(store[tab.id!] || []), {
+  store[tab.id] = [ ...(store[tab.id] || []), {
     tab,
     timestamp: DateTime.now().toMillis(),
     objectUrl
