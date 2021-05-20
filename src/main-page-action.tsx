@@ -1,9 +1,9 @@
+import _ from "lodash"
+import { DateTime } from "luxon"
 import React, { useCallback, useEffect, useState } from "react"
 import ReactDOM from "react-dom"
 import { EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "./events"
-import _ from "lodash"
 import { History } from "./store"
-import { DateTime } from "luxon"
 
 
 declare const browser: any  // FIXME
@@ -18,7 +18,7 @@ function App() {
             const histories = message.history as History[]
             console.debug( histories )
             setHistories( _.chain( histories )
-                           .dropRight( 1 ) // Removes current page
+                           .dropRight( 1 )  // Removes current page
                            .sortBy( history => history.timestamp )
                            .reverse()
                            .value() )

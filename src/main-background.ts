@@ -1,6 +1,5 @@
 import { EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "./events"
 import * as store from "./store"
-import _ from "lodash"
 import { getActiveTab } from "./utils"
 
 
