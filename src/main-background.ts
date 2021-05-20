@@ -1,4 +1,4 @@
-import { EVENT_LOAD, EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "./events"
+import { EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "./events"
 import * as store from "./store"
 import _ from "lodash"
 import { getActiveTab } from "./utils"
@@ -6,21 +6,8 @@ import { getActiveTab } from "./utils"
 
 declare const browser: any  // FIXME
 
-async function onLoad( sender: any ) {
-  console.debug( "loaded event received" )
-  console.debug( sender )
-
-  const targetTabId = sender.tab?.id
-  if ( targetTabId ) {
-    const capturedImageUrl = await browser.tabs.captureTab( targetTabId )
-    store.save( sender.tab, capturedImageUrl )
-  } else {
-    console.debug( "loaded but tab id is unknown" )
-  }
-}
-
 async function onNavigated( details: any ) {
-  console.debug( "navigated event received" )
+  console.debug( "navigated" )
   console.debug( details )
 
   const targetTabId = details.tabId
@@ -65,11 +52,9 @@ async function onNavigate( message: any ) {
 }
 
 console.debug( "adding listener" )
-browser.runtime.onMessage.addListener( ( message: any, sender: any, _response: never ) => {
+browser.runtime.onMessage.addListener( ( message: any, _sender: any, _response: never ) => {
   console.debug( `message received: ${message.event}` )
-  if ( message.event === EVENT_LOAD ) {
-    return onLoad( sender )
-  } else if ( message.event === EVENT_REQUEST_HISTORY ) {
+  if ( message.event === EVENT_REQUEST_HISTORY ) {
     return onRequestHistory()
   } else if ( message.event === EVENT_NAVIGATE ) {
     return onNavigate( message )
