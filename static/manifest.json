@@ -5,7 +5,8 @@
   "description": "Browsing history with thumbnails",
   "icons": {},
   "permissions": [
-    "<all_urls>"
+    "<all_urls>",
+    "webNavigation"
   ],
   "background": {
     "scripts": [
@@ -19,15 +20,5 @@
     "show_matches": [
       "<all_urls>"
     ]
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "content.js"
-      ]
-    }
-  ]
+  }
 }

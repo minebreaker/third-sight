@@ -19,6 +19,21 @@ async function onLoad( sender: any ) {
   }
 }
 
+async function onNavigated( details: any ) {
+  console.debug( "navigated event received" )
+  console.debug( details )
+
+  const targetTabId = details.tabId
+  if ( targetTabId ) {
+    const capturedImageUrl = await browser.tabs.captureTab( targetTabId )
+    const tab = await browser.tabs.get( targetTabId )
+
+    store.save( tab, capturedImageUrl )
+  } else {
+    console.debug( "loaded but tab id is unknown" )
+  }
+}
+
 async function onRequestHistory() {
 
   const tab = await getActiveTab()
@@ -62,4 +77,8 @@ browser.runtime.onMessage.addListener( ( message: any, sender: any, _response: n
     console.debug( `unknown message: ${message.event}` )
     return Promise.resolve()
   }
+} )
+
+browser.webNavigation.onCompleted.addListener( ( details: any ) => {
+  return onNavigated( details )
 } )

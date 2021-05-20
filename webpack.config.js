@@ -4,7 +4,6 @@ const path = require( "path" )
 module.exports = {
   entry: {
     "background": "./build/sources/src/main-background.js",
-    "content": "./build/sources/src/main-content.js",
     "page-action": "./build/sources/src/main-page-action.js"
   },
   output: {
