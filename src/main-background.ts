@@ -1,6 +1,7 @@
-import { EVENT_LOAD, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "./events"
+import { EVENT_LOAD, EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "./events"
 import * as store from "./store"
 import _ from "lodash"
+import { getActiveTab } from "./utils"
 
 
 declare const browser: any  // FIXME
@@ -19,17 +20,32 @@ async function onLoad( sender: any ) {
 }
 
 async function onRequestHistory() {
-  // Since `sender.tab` is undefined when sent from page/browser actions,
-  // We assume active tab is the one who sent the request
-  const tabs = await browser.tabs.query( { active: true, currentWindow: true } )
-  if ( _.isEmpty( tabs ) ) {
-    throw new Error( "Active tab not found" )
-  }
 
-  const histories = store.load( tabs[0].id )
+  const tab = await getActiveTab()
+
+  const histories = store.load( tab.id )
   return {
     event: EVENT_RESPONSE_HISTORY,
     history: histories
+  }
+}
+
+async function onNavigate( message: any ) {
+
+  //const tab = await getActiveTab()
+
+  const url = message.url
+  if ( typeof url !== "string" ) {
+    throw new Error( "Invalid message" )
+  }
+
+  // noinspection PointlessBooleanExpressionJS
+  const newTab = message.newTab === true
+
+  if ( newTab ) {
+    await browser.tabs.create( { url } )
+  } else {
+    await browser.tabs.update( { url } )
   }
 }
 
@@ -40,6 +56,8 @@ browser.runtime.onMessage.addListener( ( message: any, sender: any, _response: n
     return onLoad( sender )
   } else if ( message.event === EVENT_REQUEST_HISTORY ) {
     return onRequestHistory()
+  } else if ( message.event === EVENT_NAVIGATE ) {
+    return onNavigate( message )
   } else {
     console.debug( `unknown message: ${message.event}` )
     return Promise.resolve()

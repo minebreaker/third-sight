@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import ReactDOM from "react-dom"
-import { EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "./events"
+import { EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "./events"
 import _ from "lodash"
 import { History } from "./store"
 import { DateTime } from "luxon"
@@ -31,6 +31,18 @@ function App() {
       }, []
   )
 
+  const onClick = useCallback( ( url: string ) => {
+    console.log( "clicked" )
+    browser.runtime.sendMessage( { event: EVENT_NAVIGATE, url } ).then( () => {
+      window.close()
+    } )
+  }, [] )
+
+  const onAuxClick = useCallback( ( url: string ) => {
+    console.log( "aux clicked" )
+    browser.runtime.sendMessage( { event: EVENT_NAVIGATE, url, newTab: true } ).then()
+  }, [] )
+
   return (
       <div>
         {histories === undefined
@@ -38,15 +50,19 @@ function App() {
             : _.isEmpty( histories )
                 ? <p>The history is empty</p>
                 : histories.map( history => (
-                    <div style={{ margin: "4px", border: "solid 1px black" }}>
+                    <div style={{ margin: "4px", border: "solid 1px black", cursor: "pointer" }}
+                         onClick={() => onClick( history.tab.url )}
+                         onAuxClick={() => onAuxClick( history.tab.url )}>
                       <p>{history.tab.title}</p>
                       <p>{history.tab.url}</p>
                       <p>{DateTime.fromMillis( history.timestamp ).toISO()}</p>
-                      <img src={history.objectUrl} style={{
-                        width: 400,
-                        height: 300,
-                        objectFit: "cover"
-                      }} />
+                      <img src={history.objectUrl}
+                           style={{
+                             width: 400,
+                             height: 300,
+                             objectFit: "cover"
+                           }}
+                           alt="tab thumbnail" />
                     </div>
                 ) )
         }
