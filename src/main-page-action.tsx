@@ -53,13 +53,26 @@ function App() {
                     <div style={{ margin: "4px", border: "solid 1px black", cursor: "pointer" }}
                          onClick={() => onClick( history.tab.url )}
                          onAuxClick={() => onAuxClick( history.tab.url )}>
-                      <p>{history.tab.title}</p>
-                      <p>{history.tab.url}</p>
-                      <p>{DateTime.fromMillis( history.timestamp ).toISO()}</p>
+                      <p style={{
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        paddingRight: "1em",
+                        overflow: "hidden"
+                      }}>{history.tab.title}</p>
+                      <p style={{
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        paddingRight: "1em"
+                      }}>{history.tab.url}</p>
+                      <p style={{
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        paddingRight: "1em"
+                      }}>{DateTime.fromMillis( history.timestamp ).toISO()}</p>
                       <img src={history.objectUrl}
                            style={{
-                             width: 400,
-                             height: 300,
+                             width: 320,
+                             height: 180,
                              objectFit: "cover"
                            }}
                            alt="tab thumbnail" />
