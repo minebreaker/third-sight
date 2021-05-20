@@ -16,6 +16,5 @@ This FireFox extension adds browser action button to show browsing history with 
 
 ## TODO
 
-* Memory clean up
 * Better styling
 * Visual tab list

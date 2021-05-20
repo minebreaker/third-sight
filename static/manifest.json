@@ -6,6 +6,7 @@
   "icons": {},
   "permissions": [
     "<all_urls>",
+    "sessions",
     "webNavigation"
   ],
   "background": {

@@ -2,6 +2,8 @@ import { DateTime } from "luxon"
 import _ from "lodash"
 
 
+declare const browser: any  // FIXME
+
 // TODO: Apparently this code leaks memory. Need clean up
 export type Store = {
   [tabId: number]: History[]
@@ -38,4 +40,24 @@ export function save( tab: any, objectUrl: string ) {
 
 export function load( tabId: number ): History[] {
   return store[tabId] || []
+}
+
+export async function cleanUp() {
+  // Sessions can be restored after closed.
+  // If we discard the histories immediately, the restored sessions cannot access to it.
+  // Since no callback for session forgetting is provided,
+  // we use timeout moratorium to possibly recover the histories.
+
+  console.debug( "cleanup requested" )
+  const closedTab = await browser.sessions.getRecentlyClosed( { maxResults: 1 } )
+  const tabId = closedTab[0].id
+
+  setTimeout( async () => {
+    console.log( "executing cleanup" )
+    const closedSessions: any[] = await browser.sessions.getRecentlyClosed()
+    if ( _.find( closedSessions, s => s.tab?.id === tabId ) ) {
+      // If the tab is still closed after the timeout, remove histories
+      delete store[tabId]
+    }
+  }, 60 * 1000 )
 }

@@ -66,3 +66,7 @@ browser.runtime.onMessage.addListener( ( message: any, _sender: any, _response: 
 browser.webNavigation.onCompleted.addListener( ( details: any ) => {
   return onNavigated( details )
 } )
+
+browser.sessions.onChanged.addListener( () => {
+  return store.cleanUp()
+} )
