@@ -62,12 +62,14 @@ function App() {
                       <p style={{
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
-                        paddingRight: "1em"
+                        paddingRight: "1em",
+                        overflow: "hidden"
                       }}>{history.tab.url}</p>
                       <p style={{
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
-                        paddingRight: "1em"
+                        paddingRight: "1em",
+                        overflow: "hidden"
                       }}>{DateTime.fromMillis( history.timestamp ).toISO()}</p>
                       <img src={history.objectUrl}
                            style={{
