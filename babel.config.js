@@ -1,6 +1,6 @@
 module.exports = {
     presets: [
-        ["@babel/preset-env", { targets: "last 3 Firefox versions", useBuiltIns: "entry", corejs: 3 }]
+        ["@babel/preset-env", { targets: "last 3 Firefox versions" }]
     ],
     plugins: [
         "@babel/plugin-syntax-dynamic-import",

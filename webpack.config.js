@@ -1,6 +1,8 @@
 const path = require( "path" )
 
 
+const env = process.env.NODE_ENV && process.env.NODE_ENV.trim()
+
 module.exports = {
   entry: {
     "background": "./build/sources/src/main-background.js",
@@ -11,8 +13,8 @@ module.exports = {
     chunkFilename: "[name].chunk.js",
     path: path.resolve( __dirname, "build/out" )
   },
-  mode: process.env.NODE_ENV === "production" ? "production" : "development",
-  devtool: process.env.NODE_ENV === "production" ? false : "inline-source-map",
+  mode: env === "production" ? "production" : "development",
+  devtool: env === "production" ? false : "inline-source-map",
   module: {
     rules: [
       {
