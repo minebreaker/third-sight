@@ -38,9 +38,11 @@ function App() {
     } )
   }, [] )
 
-  const onAuxClick = useCallback( ( url: string ) => {
+  const onAuxClick = useCallback( ( e: React.MouseEvent, url: string ) => {
     console.log( "aux clicked" )
-    browser.runtime.sendMessage( { event: EVENT_NAVIGATE, url, newTab: true } ).then()
+    if ( e.button === 1 ) { // Middle button clicked
+      browser.runtime.sendMessage( { event: EVENT_NAVIGATE, url, newTab: true } ).then()
+    }
   }, [] )
 
   return (
@@ -53,7 +55,7 @@ function App() {
                     <div key={history.timestamp}
                          style={{ margin: "4px", border: "solid 1px black", cursor: "pointer" }}
                          onClick={() => onClick( history.tab.url )}
-                         onAuxClick={() => onAuxClick( history.tab.url )}>
+                         onAuxClick={e => onAuxClick( e, history.tab.url )}>
                       <div style={{ margin: "4px" }}>
                         <img src={history.objectUrl}
                              style={{
