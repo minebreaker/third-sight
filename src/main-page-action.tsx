@@ -72,13 +72,15 @@ function App() {
                         paddingRight: "1em",
                         overflow: "hidden"
                       }}>{DateTime.fromMillis( history.timestamp ).toISO()}</p>
-                      <img src={history.objectUrl}
-                           style={{
-                             width: 320,
-                             height: 180,
-                             objectFit: "cover"
-                           }}
-                           alt="tab thumbnail" />
+                      <div>
+                        <img src={history.objectUrl}
+                             style={{
+                               width: 320,
+                               height: 180,
+                               objectFit: "cover"
+                             }}
+                             alt="tab thumbnail" />
+                      </div>
                     </div>
                 ) )
         }
