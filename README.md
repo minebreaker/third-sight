@@ -17,5 +17,9 @@ This FireFox extension adds browser action button to show browsing history with 
 ## TODO
 
 * Better styling
+    * JSS
 * Visual tab list
-* lint
+  * all tabs in window, all tabs across windows
+* eslint
+* CI
+* Find type definitions for `browser` variable
