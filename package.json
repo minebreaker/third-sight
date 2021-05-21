@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "npm run assemble && npm run test",
-    "build:production": "export NODE_ENV=production && npm run clean && npm run assemble",
+    "build:production": "set NODE_ENV=production && npm run clean && npm run assemble && npm run test",
     "assemble": "npm run compile && npm run bundle && npm run copy",
     "compile": "tsc -p tsconfig.json",
     "bundle": "webpack",
@@ -15,7 +15,8 @@
     "copy-icon": "cpx static/icon.svg ./build/out",
     "test": "mocha --config .mocharc.js",
     "clean": "rimraf ./build/*",
-    "serve": "cd build/out && python -m http.server",
+    "lint": "npm run lint-web-ext",
+    "lint-web-ext": "web-ext lint",
     "watchCompile": "tsc -p tsconfig.json --incremental -w",
     "watchBundle": "webpack -w"
   },
@@ -53,6 +54,7 @@
     "ts-loader": "^8.3.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4",
+    "web-ext": "^6.1.0",
     "webpack": "^5.37.1",
     "webpack-cli": "^4.7.0"
   }

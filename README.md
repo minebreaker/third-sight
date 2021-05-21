@@ -18,3 +18,4 @@ This FireFox extension adds browser action button to show browsing history with 
 
 * Better styling
 * Visual tab list
+* lint
