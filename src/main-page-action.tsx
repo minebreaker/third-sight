@@ -50,7 +50,8 @@ function App() {
             : _.isEmpty( histories )
                 ? <p>The history is empty</p>
                 : histories.map( history => (
-                    <div style={{ margin: "4px", border: "solid 1px black", cursor: "pointer" }}
+                    <div key={history.timestamp}
+                         style={{ margin: "4px", border: "solid 1px black", cursor: "pointer" }}
                          onClick={() => onClick( history.tab.url )}
                          onAuxClick={() => onAuxClick( history.tab.url )}>
                       <p style={{
