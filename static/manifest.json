@@ -16,6 +16,7 @@
   },
   "page_action": {
     "browser_style": true,
+    "default_icon": "icon.svg",
     "default_title": "Show history with thumbnails",
     "default_popup": "index.html",
     "show_matches": [

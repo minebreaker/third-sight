@@ -1,0 +1,10 @@
+<svg version="1.1"
+     baseProfile="full"
+     width="38" height="38"
+     xmlns="http://www.w3.org/2000/svg">
+
+    <path d="M 0 18 Q 18 -2, 37 18" stroke="rgba(259,259,260,0.8)" stroke-width="4" fill="transparent"/>
+    <path d="M 0 18 Q 18 39, 37 18" stroke="rgba(259,259,260,0.8)" stroke-width="4" fill="transparent"/>
+
+    <circle cx="18" cy="18" r="6" fill="rgba(249, 249, 250, 0.8)"/>
+</svg>
