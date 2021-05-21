@@ -51,7 +51,7 @@ async function onNavigate( message: any ) {
 }
 
 console.debug( "adding listener" )
-browser.runtime.onMessage.addListener( ( message: any, _sender: any, _response: never ) => {
+browser.runtime.onMessage.addListener( ( message: any, _sender: any ) => {
   console.debug( `message received: ${message.event}` )
   if ( message.event === EVENT_REQUEST_HISTORY ) {
     return onRequestHistory()
