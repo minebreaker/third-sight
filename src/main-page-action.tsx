@@ -54,25 +54,7 @@ function App() {
                          style={{ margin: "4px", border: "solid 1px black", cursor: "pointer" }}
                          onClick={() => onClick( history.tab.url )}
                          onAuxClick={() => onAuxClick( history.tab.url )}>
-                      <p style={{
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        paddingRight: "1em",
-                        overflow: "hidden"
-                      }}>{history.tab.title}</p>
-                      <p style={{
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        paddingRight: "1em",
-                        overflow: "hidden"
-                      }}>{history.tab.url}</p>
-                      <p style={{
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        paddingRight: "1em",
-                        overflow: "hidden"
-                      }}>{DateTime.fromMillis( history.timestamp ).toISO()}</p>
-                      <div>
+                      <div style={{ margin: "4px" }}>
                         <img src={history.objectUrl}
                              style={{
                                width: 320,
@@ -81,6 +63,16 @@ function App() {
                              }}
                              alt="tab thumbnail" />
                       </div>
+                      <p style={{
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        paddingRight: "1em",
+                        overflow: "hidden"
+                      }}>
+                        {history.tab.title}<br />
+                        {history.tab.url}<br />
+                        {DateTime.fromMillis( history.timestamp ).toLocaleString()}
+                      </p>
                     </div>
                 ) )
         }
