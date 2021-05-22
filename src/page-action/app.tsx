@@ -72,7 +72,7 @@ export function App() {
                       }}>
                         {history.tab.title}<br />
                         {history.tab.url}<br />
-                        {DateTime.fromMillis( history.timestamp ).toLocaleString()}
+                        {DateTime.fromMillis( history.timestamp ).toLocaleString( DateTime.DATETIME_MED_WITH_SECONDS )}
                       </p>
                     </div>
                 ) )
