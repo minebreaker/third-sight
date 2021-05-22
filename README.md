@@ -33,3 +33,4 @@ npm run build
 * eslint
 * CI
 * Find type definitions for `browser` variable
+* Settings page

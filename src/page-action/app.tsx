@@ -1,13 +1,61 @@
 import _ from "lodash"
 import { DateTime } from "luxon"
 import React, { useCallback, useEffect, useState } from "react"
+import { createUseStyles } from "react-jss"
 import { EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "../events"
 import { History } from "../store"
+import classNames from "classnames"
 
 
 declare const browser: any  // FIXME
 
+const useStyles = createUseStyles( {
+  "@global": {
+    body: {
+      "background-color": "#4a4a4f",
+      "color": "#f9f9fa"
+    }
+  },
+  messageOnly: {
+    "margin": "1em",
+    "font-size": "15px"
+  },
+  cardList: {
+    "overflow-x": "hidden"
+  },
+  card: {
+    "width": 480,
+    "margin-bottom": "2em",
+    "cursor": "pointer"
+  },
+  cardImage: {
+    "display": "block",
+    "width": 480,
+    "height": 270,
+    "object-fit": "cover"
+  },
+  cardMessage: {
+    "display": "block"
+  },
+  cardMessageBase: {
+    "margin": 0,
+    "padding": "0 1em",
+    "white-space": "nowrap",
+    "text-overflow": "ellipsis",
+    "overflow": "hidden"
+  },
+  cardMessageTitle: {
+    "font-size": "17px",
+    "font-weight": 600
+  },
+  cardMessageBody: {
+    "font-size": "15px"
+  }
+} )
+
 export function App() {
+
+  const classes = useStyles()
 
   const [ histories, setHistories ] = useState<History[]>()
 
@@ -47,35 +95,32 @@ export function App() {
   return (
       <div>
         {histories === undefined
-            ? <p>Loading...</p>
+            ? <p className={classes.messageOnly}>Loading...</p>
             : _.isEmpty( histories )
-                ? <p>The history is empty</p>
-                : histories.map( history => (
-                    <div key={history.timestamp}
-                         style={{ margin: "4px", border: "solid 1px black", cursor: "pointer" }}
-                         onClick={() => onClick( history.tab.url )}
-                         onAuxClick={e => onAuxClick( e, history.tab.url )}>
-                      <div style={{ margin: "4px" }}>
-                        <img src={history.objectUrl}
-                             style={{
-                               width: 320,
-                               height: 180,
-                               objectFit: "cover"
-                             }}
-                             alt="tab thumbnail" />
-                      </div>
-                      <p style={{
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        paddingRight: "1em",
-                        overflow: "hidden"
-                      }}>
-                        {history.tab.title}<br />
-                        {history.tab.url}<br />
-                        {DateTime.fromMillis( history.timestamp ).toLocaleString( DateTime.DATETIME_MED_WITH_SECONDS )}
-                      </p>
+                ? <p className={classes.messageOnly}>The history is empty</p>
+                : (
+                    <div className={classes.cardList}>
+                      {histories.map( history => (
+                          <div key={history.timestamp}
+                               className={classes.card}
+                               onClick={() => onClick( history.tab.url )}
+                               onAuxClick={e => onAuxClick( e, history.tab.url )}>
+                            <img src={history.objectUrl}
+                                 className={classes.cardImage}
+                                 alt="tab thumbnail" />
+                            <p className={classes.cardMessage}>
+                              <p className={classNames( classes.cardMessageBase, classes.cardMessageTitle )}>
+                                {history.tab.title}
+                              </p>
+                              <p className={classNames( classes.cardMessageBase, classes.cardMessageBody )}>
+                                {history.tab.url}<br />
+                                {DateTime.fromMillis( history.timestamp ).toLocaleString( DateTime.DATETIME_MED_WITH_SECONDS )}
+                              </p>
+                            </p>
+                          </div>
+                      ) )}
                     </div>
-                ) )
+                )
         }
       </div>
   )
