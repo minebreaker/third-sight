@@ -2,7 +2,15 @@
   "name": "third-sight",
   "version": "0.1.0",
   "description": "",
-  "private": true,
+  "homepage": "https://github.com/minebreaker/third-sight",
+  "bugs": {
+    "url": "https://github.com/minebreaker/third-sight/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/minebreaker/third-sight.git"
+  },
+  "license": "MIT",
   "scripts": {
     "build": "set NODE_ENV=production && npm run assemble & npm run lint && npm run test && npm run web-ext-build",
     "build:clean": "npm run clean && npm run build",
