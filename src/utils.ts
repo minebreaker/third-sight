@@ -1,9 +1,7 @@
 import _ from "lodash"
 
 
-declare const browser: any  // FIXME
-
-export async function getActiveTab() {
+export async function getActiveTab(): Promise<Tab> {
   // Since `sender.tab` is undefined when sent from page/browser actions,
   // We assume active tab is the one who sent the request
   const tabs = await browser.tabs.query( { active: true, currentWindow: true } )

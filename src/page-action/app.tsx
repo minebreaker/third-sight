@@ -7,8 +7,6 @@ import { History } from "../store"
 import classNames from "classnames"
 
 
-declare const browser: any  // FIXME
-
 const useStyles = createUseStyles( {
   "@global": {
     body: {
@@ -53,7 +51,7 @@ const useStyles = createUseStyles( {
   }
 } )
 
-export function App() {
+export function App(): React.ReactElement {
 
   const classes = useStyles()
 

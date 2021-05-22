@@ -28,7 +28,8 @@
     "version": "node ./script/bump-manifest.js %npm_package_version% && git add ./static/manifest.json",
     "test": "mocha --config .mocharc.js",
     "clean": "rimraf ./build/*",
-    "lint": "eslint src && npm run web-ext-lint",
+    "lint": "npm run lint-eslint && npm run web-ext-lint",
+    "lint-eslint": "eslint src",
     "watchCompile": "tsc -p tsconfig.json --incremental -w",
     "watchBundle": "webpack -w"
   },

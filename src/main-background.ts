@@ -3,8 +3,6 @@ import * as store from "./store"
 import { getActiveTab } from "./utils"
 
 
-declare const browser: any  // FIXME
-
 async function onNavigated( details: any ) {
   console.debug( "navigated" )
   console.debug( details )
@@ -23,6 +21,11 @@ async function onNavigated( details: any ) {
 async function onRequestHistory() {
 
   const tab = await getActiveTab()
+  if ( tab.id === browser.tabs.TAB_ID_NONE ) {
+    // Usually tab.id is not `undefined` when pageAction is enabled,
+    // so this path should be unreachable
+    throw new Error()
+  }
 
   const histories = store.load( tab.id )
   return {
@@ -51,6 +54,8 @@ async function onNavigate( message: any ) {
 }
 
 console.debug( "adding listener" )
+// FIXME: configure an appropriate rule
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 browser.runtime.onMessage.addListener( ( message: any, _sender: any ) => {
   console.debug( `message received: ${message.event}` )
   if ( message.event === EVENT_REQUEST_HISTORY ) {
