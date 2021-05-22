@@ -14,6 +14,16 @@ This FireFox extension adds browser action button to show browsing history with 
       This can be problematic when the request was not sent using `GET` HTTP method.
 
 
+## Build
+
+```
+npm install
+npm run build
+
+# will generate ./build/out/web-ext-artifacts/third_sight-x.x.x.zip
+```
+
+
 ## TODO
 
 * Better styling
