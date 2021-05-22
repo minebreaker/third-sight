@@ -1,0 +1,15 @@
+name: Build
+
+on: push
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/setup-node@main
+      - name: Dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
