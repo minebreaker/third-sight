@@ -31,18 +31,14 @@ function replace( file, from, to, cb ) {
 
 const from1 = /Function\(['"]return this['"]\)/
 const to1 = "(function(){throw new Error(\"fatal attempt to get global\")})"
-const from2 = /[\w{0,31}]\.innerHTML/ //
-const to2 = "var _"
-const from3 = /"<svg>"\+[\w]\.valueOf\(\)\.toString\(\)\+"<\/svg>"/  // special treat for the production build
-const to3 = "\"<p>build error!</p>\""
+const from2 = /\.innerHTML ?=/
+const to2 = ".undefined ="
 
 console.info( "Executing remover script..." )
 replace( "./build/out/background.js", from1, to1, () => {
   replace( "./build/out/page-action.js", from1, to1, () => {
     replace( "./build/out/page-action.js", from2, to2, () => {
-      replace( "./build/out/page-action.js", from3, to3, () => {
-        console.info( "Remover end." )
-      } )
+      console.info( "Remover end." )
     } )
   } )
 } )
