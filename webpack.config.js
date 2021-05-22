@@ -23,5 +23,8 @@ module.exports = {
         exclude: /node_modules/
       }
     ]
+  },
+  node: {
+    global: false
   }
 }
