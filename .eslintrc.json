@@ -1,0 +1,46 @@
+{
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "react-hooks"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "rules": {
+    "no-console": "warn",
+    "complexity": "warn",
+    "no-eval": "error",
+    "no-global-assign": "error",
+    "no-implicit-globals": "error",
+    "no-implied-eval": "error",
+    "no-labels": "error",
+    "no-return-assign": "error",
+    "no-unused-expressions": "error",
+    "no-useless-concat": "error",
+    "prefer-regex-literals": "warn",
+    "no-label-var": "error",
+    "prefer-const": "error",
+    "prefer-spread": "error",
+    "prefer-rest-params": "error",
+    "@typescript-eslint/array-type": [
+      "error",
+      {
+        "default": "array"
+      }
+    ],
+    "@typescript-eslint/ban-ts-comment": [
+      "error",
+      {
+        "ts-expect-error": "allow-with-description",
+        "ts-ignore": "allow-with-description",
+        "ts-nocheck": "allow-with-description",
+        "ts-check": false
+      }
+    ]
+  }
+}
