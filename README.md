@@ -26,8 +26,6 @@ npm run build
 
 ## TODO
 
-* Better styling
-    * JSS
 * Visual tab list
   * all tabs in window, all tabs across windows
 * eslint
