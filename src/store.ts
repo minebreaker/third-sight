@@ -4,8 +4,11 @@ import _ from "lodash"
 
 declare const browser: any  // FIXME
 
+
+const MAX_COUNT_PER_PAGE = 64
+
 // TODO: Apparently this code leaks memory. Need clean up
-export type Store = {
+type Store = {
   [tabId: number]: History[]
 }
 
@@ -30,12 +33,13 @@ export function save( tab: any, objectUrl: string ) {
     return
   }
 
-  // Tab id nullability should checked by content script
-  store[tab.id] = [ ...(store[tab.id] || []), {
+  const newTabs = [ ...(store[tab.id] || []), {
     tab,
     timestamp: DateTime.now().toMillis(),
     objectUrl
   } ]
+
+  store[tab.id] = _.take( newTabs, MAX_COUNT_PER_PAGE )
 }
 
 export function load( tabId: number ): History[] {
