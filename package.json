@@ -13,6 +13,7 @@
     "copy-index": "cpx static/index.html ./build/out",
     "copy-manifest": "cpx static/manifest.json ./build/out",
     "copy-icon": "cpx static/icon.svg ./build/out",
+    "web-ext": "cd ./build/out && web-ext run",
     "test": "mocha --config .mocharc.js",
     "clean": "rimraf ./build/*",
     "lint": "npm run lint-web-ext",
