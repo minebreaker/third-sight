@@ -17,6 +17,8 @@ This FireFox extension adds browser action button to show browsing history with 
 ## Build
 
 ```
+export NODE_ENV=production
+
 npm install
 npm run build
 
