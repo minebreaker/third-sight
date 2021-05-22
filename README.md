@@ -32,5 +32,6 @@ npm run build
   * all tabs in window, all tabs across windows
 * eslint
 * CI
+  * Nightly build
 * Find type definitions for `browser` variable
 * Settings page
