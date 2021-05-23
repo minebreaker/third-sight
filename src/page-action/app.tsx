@@ -33,7 +33,15 @@ const useStyles = createUseStyles( {
     "object-fit": "cover"
   },
   cardMessage: {
-    "display": "block"
+    "display": "block",
+    "margin-top": "0.4em"
+  },
+  cardFavicon: {
+    "width": 16,
+    "height": 16,
+    "object-fit": "cover",
+    "margin-right": "0.2em",
+    "vertical-align": "middle"
   },
   cardMessageBase: {
     "margin": 0,
@@ -104,15 +112,16 @@ export function App(): React.ReactElement {
                             <img src={history.objectUrl}
                                  className={classes.cardImage}
                                  alt="tab thumbnail" />
-                            <p className={classes.cardMessage}>
+                            <div className={classes.cardMessage}>
                               <p className={classNames( classes.cardMessageBase, classes.cardMessageTitle )}>
+                                <img src={history.faviconUrl} alt="" className={classes.cardFavicon} />
                                 {history.tab.title}
                               </p>
                               <p className={classNames( classes.cardMessageBase, classes.cardMessageBody )}>
                                 {history.tab.url}<br />
                                 {DateTime.fromMillis( history.timestamp ).toLocaleString( DateTime.DATETIME_MED_WITH_SECONDS )}
                               </p>
-                            </p>
+                            </div>
                           </div>
                       ) )}
                     </div>

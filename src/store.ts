@@ -12,7 +12,8 @@ type Store = {
 export type History = {
   tab: Tab,
   timestamp: number,
-  objectUrl: string
+  objectUrl: string,
+  faviconUrl: string
 }
 
 const store: Store = {}
@@ -32,7 +33,8 @@ export function save( tab: Tab, objectUrl: string ): void {
   const newTabs = [ ...(store[tab.id] || []), {
     tab,
     timestamp: DateTime.now().toMillis(),
-    objectUrl
+    objectUrl,
+    faviconUrl: tab.favIconUrl
   } ]
 
   store[tab.id] = _.take( newTabs, MAX_COUNT_PER_PAGE )
