@@ -77,14 +77,12 @@ export function App(): React.ReactElement {
   )
 
   const onClick = useCallback( ( url: string ) => {
-    console.log( "clicked" )
     browser.runtime.sendMessage( { event: EVENT_NAVIGATE, url } ).then( () => {
       window.close()
     } )
   }, [] )
 
   const onAuxClick = useCallback( ( e: React.MouseEvent, url: string ) => {
-    console.log( "aux clicked" )
     if ( e.button === 1 ) { // Middle button clicked
       browser.runtime.sendMessage( { event: EVENT_NAVIGATE, url, newTab: true } ).then()
     }

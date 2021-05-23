@@ -28,10 +28,9 @@ npm run build
 
 ## TODO
 
-* Replace tab id to session id so that clean up function will work correctly!
+* Favicon
 * Visual tab list
   * all tabs in window, all tabs across windows
-* eslint
 * CI
   * Nightly build
 * Find type definitions for `browser` variable

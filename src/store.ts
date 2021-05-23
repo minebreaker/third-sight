@@ -42,7 +42,7 @@ export function load( tabId: number ): History[] {
   return store[tabId] || []
 }
 
-export async function cleanUp(): Promise<void> {
+export async function scheduleCleanUp( tabId: number ): Promise<void> {
   // Sessions can be restored after closed.
   // If we discard the histories immediately, the restored sessions cannot access to it.
   // Since no callback for session forgetting is provided,
@@ -50,19 +50,26 @@ export async function cleanUp(): Promise<void> {
 
   console.debug( "cleanup requested" )
   const sessions = await browser.sessions.getRecentlyClosed( { maxResults: 1 } )
-  console.log( sessions )
-  // FIXME: closed tab doesn't have a tabId
-  const tabId = sessions[0]?.tab?.id
-  if ( !tabId ) {
+  console.debug( sessions )
+  console.debug( `store size: ${Object.keys( store ).length}` )
+
+  const targetTab = sessions[0]?.tab
+  // Since closed tab doesn't have a tabId, we use sessionId
+  // to determine the closing tab's identity
+  const sessionId = targetTab?.sessionId
+  if ( !sessionId ) {
     return
   }
 
   setTimeout( async () => {
-    console.log( "executing cleanup" )
+    console.debug( "executing cleanup" )
     const closedSessions = await browser.sessions.getRecentlyClosed()
-    if ( _.find( closedSessions, s => s?.tab?.id === tabId ) ) {
+    if ( _.find( closedSessions, s => s?.tab?.sessionId === sessionId ) ) {
       // If the tab is still closed after the timeout, remove histories
       delete store[tabId]
+      console.debug( `done for tabId: ${tabId}` )
+    } else {
+      console.debug( "the closed tab seemed to be restored" )
     }
   }, CLEANUP_TIMEOUT_MILLS )
 }

@@ -72,6 +72,6 @@ browser.webNavigation.onCompleted.addListener( ( details: any ) => {
   return onNavigated( details )
 } )
 
-browser.sessions.onChanged.addListener( () => {
-  return store.cleanUp()
+browser.tabs.onRemoved.addListener( ( tabId: number ) => {
+  return store.scheduleCleanUp( tabId )
 } )
