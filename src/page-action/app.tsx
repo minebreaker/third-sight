@@ -4,13 +4,15 @@ import { createUseStyles } from "react-jss"
 import { EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "../events"
 import { History } from "../store"
 import { HistoryView } from "./history"
+import { Separator } from "./separator"
+import { States, Tab } from "./tab"
 
 
 const useStyles = createUseStyles( {
   "@global": {
     body: {
-      "background-color": "#4a4a4f",
-      "color": "#f9f9fa"
+      "background-color": "#38383d",
+      "color": "#ffffff"
     }
   },
   messageOnly: {
@@ -26,6 +28,7 @@ export function App(): React.ReactElement {
 
   const [ histories, setHistories ] = useState<History[]>()
 
+  // Sync histories on popup
   useEffect( () => {
         browser.runtime.sendMessage( { event: EVENT_REQUEST_HISTORY } ).then( ( message: any ) => {
           if ( message.event === EVENT_RESPONSE_HISTORY ) {
@@ -54,6 +57,8 @@ export function App(): React.ReactElement {
   }, [] )
 
 
+  const [ state, setState ] = useState<States>( "history" )
+
   if ( histories === undefined ) {
     return <p className={classes.messageOnly}>Loading...</p>
   } else if ( _.isEmpty( histories ) ) {
@@ -61,7 +66,14 @@ export function App(): React.ReactElement {
   } else {
     return (
         <div>
-          <HistoryView histories={histories} onClick={navigate} onAuxClick={navigateWithNewTab} />
+          <Tab state={state} onClick={setState} />
+          <Separator />
+          {state === "history" && (
+              <HistoryView histories={histories} onClick={navigate} onAuxClick={navigateWithNewTab} />
+          )}
+          {state === "birdseye" && (
+              <p>You're flying like a bird!</p>
+          )}
         </div>
     )
   }
