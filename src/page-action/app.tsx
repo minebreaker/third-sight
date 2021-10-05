@@ -50,12 +50,9 @@ export function App(): React.ReactElement {
     } )
   }, [] )
 
-  const navigateWithNewTab = useCallback( ( e: React.MouseEvent, url: string ) => {
-    if ( e.button === 1 ) { // Middle button clicked
+  const navigateWithNewTab = useCallback( ( url: string ) => {
       browser.runtime.sendMessage( { event: EVENT_NAVIGATE, url, newTab: true } ).then()
-    }
   }, [] )
-
 
   const [ state, setState ] = useState<States>( "history" )
 
@@ -69,7 +66,7 @@ export function App(): React.ReactElement {
           <Tab state={state} onClick={setState} />
           <Separator />
           {state === "history" && (
-              <HistoryView histories={histories} onClick={navigate} onAuxClick={navigateWithNewTab} />
+              <HistoryView histories={histories} onNavigate={navigate} onNavigateWithNewTab={navigateWithNewTab} />
           )}
           {state === "birdseye" && (
               <p>You're flying like a bird!</p>
