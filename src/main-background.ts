@@ -1,6 +1,5 @@
-import { EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "./events"
+import { EVENT_HIGHLIGHT, EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "./events"
 import * as store from "./store"
-import { getActiveTab } from "./utils"
 
 
 async function onNavigated( details: any ) {
@@ -19,24 +18,14 @@ async function onNavigated( details: any ) {
 }
 
 async function onRequestHistory() {
-
-  const tab = await getActiveTab()
-  if ( tab.id === browser.tabs.TAB_ID_NONE ) {
-    // Usually tab.id is not `undefined` when pageAction is enabled,
-    // so this path should be unreachable
-    throw new Error()
-  }
-
-  const histories = store.load( tab.id )
+  const histories = store.load()
   return {
     event: EVENT_RESPONSE_HISTORY,
-    history: histories
+    store: histories
   }
 }
 
 async function onNavigate( message: any ) {
-
-  //const tab = await getActiveTab()
 
   const url = message.url
   if ( typeof url !== "string" ) {
@@ -53,6 +42,21 @@ async function onNavigate( message: any ) {
   }
 }
 
+async function onHighlight( message: any ) {
+
+  const tabId = message.tabId
+  if ( typeof tabId !== "number" ) {
+    throw new Error( "Invalid message" )
+  }
+
+  const tab = await browser.tabs.get( tabId )
+  const info = { windowId: tab.windowId, populate: false, tabs: [ tab.index ] }
+  // To avoid promise rejection error at the frontend, uses timeout to
+  // (hopefully) wait until promise resolving and then execute highlighting.
+  // FIXME: Find better way to do this
+  setTimeout( () => browser.tabs.highlight( info ).then(), 0 )
+}
+
 console.debug( "adding listener" )
 // FIXME: configure an appropriate rule
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -62,6 +66,8 @@ browser.runtime.onMessage.addListener( ( message: any, _sender: any ) => {
     return onRequestHistory()
   } else if ( message.event === EVENT_NAVIGATE ) {
     return onNavigate( message )
+  } else if ( message.event === EVENT_HIGHLIGHT ) {
+    return onHighlight( message )
   } else {
     console.debug( `unknown message: ${message.event}` )
     return Promise.resolve()

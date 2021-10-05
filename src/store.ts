@@ -5,7 +5,7 @@ import _ from "lodash"
 const MAX_COUNT_PER_PAGE = 64
 const CLEANUP_TIMEOUT_MILLS = 60 * 1000
 
-type Store = {
+export type Store = {
   [tabId: number]: History[]
 }
 
@@ -40,8 +40,8 @@ export function save( tab: Tab, objectUrl: string ): void {
   store[tab.id] = _.take( newTabs, MAX_COUNT_PER_PAGE )
 }
 
-export function load( tabId: number ): History[] {
-  return store[tabId] || []
+export function load(): Store {
+  return store
 }
 
 export async function scheduleCleanUp( tabId: number ): Promise<void> {

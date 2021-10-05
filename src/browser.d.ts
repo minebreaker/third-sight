@@ -62,6 +62,7 @@ declare const browser: {
     get: ( tabId: number ) => Promise<Tab>,
     query: ( queryObj: { active?: boolean, currentWindow?: boolean, url?: string } ) => Promise<Tab[]>,
     update: ( updateProperties: { url?: string } ) => Promise<Tab>,
+    highlight: ( highlightInfo: { windowId?: number, populate?: boolean, tabs?: number[] } ) => Promise<Window>,
     TAB_ID_NONE: TabIdNone,
     onRemoved: Event<( tabId: number, removeInfo: { windowId: number, isWindowClosing: boolean } ) => Promise<void>>
   },

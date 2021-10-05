@@ -41,7 +41,7 @@ export function Tab( props: SwitchProps ): React.ReactElement {
         </div>
         <div className={classNames( classes.tab, props.state === "birdseye" && classes.selected )}
              onClick={() => props.onClick( "birdseye" )}>
-          <p className={classes.centering}>Bird's Eye</p>
+          <p className={classes.centering}>{"Bird's Eye"}</p>
         </div>
       </div>
   )

@@ -10,5 +10,13 @@ export async function getActiveTab(): Promise<Tab> {
     throw new Error( "Active tab not found" )
   }
 
-  return tabs[0]
+  const tab = tabs[0]
+
+  if ( tab.id === browser.tabs.TAB_ID_NONE ) {
+    // Usually tab.id is not `undefined` when pageAction is enabled,
+    // so this path should be unreachable
+    throw new Error()
+  }
+
+  return tab
 }
