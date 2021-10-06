@@ -1,33 +1,24 @@
 import _ from "lodash"
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import { createUseStyles } from "react-jss"
-import { Store } from "../store"
+import { History, Store } from "../store"
+import { CardList } from "./card"
 
 
 const useStyles = createUseStyles( {
-  outer: {
-    "display": "grid",
-    "grid-template-columns": "repeat(auto-fill, minmax(128px, 1fr))",
-    "min-width": "480px"
-  },
   inputWrapper: {
     "margin": "4px"
   },
   input: {
+    "display": "block",
+    "width": "100%",
     "background-color": "#4a4a4f",
     "color": "#ffffff",
-    "border": "solid #0c0c0d 1px",
+    "border": "none",
     "border-radius": "2px",
     "&:focus": {
       "outline": "none"
     }
-  },
-  image: {
-    "display": "block",
-    "width": "128px",
-    "height": "72px",
-    "border": "solid #4a4a4f 8px",
-    "cursor": "pointer"
   }
 } )
 
@@ -42,7 +33,7 @@ export function BirdsEye( props: BirdsEyeProps ): React.ReactElement {
   const classes = useStyles()
 
   const [ query, setQuery ] = useState( "" )
-  const originalTabs = useMemo(
+  const tabEntries: History[] = useMemo(
       () => (
           Object.entries( props.store )
                 .flatMap( ( [ , h ] ) => _.last( h ) || [] )
@@ -50,10 +41,10 @@ export function BirdsEye( props: BirdsEyeProps ): React.ReactElement {
       ),
       [ props.store, props.activeTab ]
   )
-  const tabs = query
+  const queriedTabEntries = query
       // TODO: use some fuzzy search libraries
-      ? originalTabs.filter( tab => tab.tab.title.includes( query ) || tab.tab.url.includes( query ) )
-      : originalTabs
+      ? tabEntries.filter( tab => tab.tab.title.includes( query ) || tab.tab.url.includes( query ) )
+      : tabEntries
 
   // Focus input on the component creation
   const inputRef = useRef<HTMLInputElement>( null )
@@ -70,16 +61,9 @@ export function BirdsEye( props: BirdsEyeProps ): React.ReactElement {
                  onChange={e => setQuery( e.target.value )}
                  placeholder="query" />
         </div>
-        {/* TODO: just use Card */}
-        <div className={classes.outer}>
-          {tabs.map( tab => (
-              <img key={tab.tab.id}
-                   src={tab.objectUrl}
-                   alt="thumb"
-                   className={classes.image}
-                   onClick={() => tab.tab.id && props.onNavigate( tab.tab.id )} />
-          ) )}
-        </div>
+        <CardList histories={queriedTabEntries}
+                  onNavigate={tab => tab.id && props.onNavigate( tab.id )}
+                  onNavigateWithNewTab={_.noop} />
       </div>
   )
 }

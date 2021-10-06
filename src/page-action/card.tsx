@@ -6,7 +6,9 @@ import { History } from "../store"
 
 
 const useStyles = createUseStyles( {
-
+  cardList: {
+    "overflow-x": "hidden"
+  },
   card: {
     "width": 480,
     "margin-bottom": "2em",
@@ -45,20 +47,40 @@ const useStyles = createUseStyles( {
   }
 } )
 
+export function CardList( { histories, onNavigate, onNavigateWithNewTab }: {
+  histories: History[],
+  onNavigate: ( tab: Tab ) => void,
+  onNavigateWithNewTab: ( tab: Tab ) => void
+} ): React.ReactElement {
+
+  const classes = useStyles()
+
+  return (
+      <div className={classes.cardList}>
+        {histories.map( history => (
+            <Card key={history.timestamp}
+                  history={history}
+                  onNavigate={onNavigate}
+                  onNavigateWithNewTab={onNavigateWithNewTab} />
+        ) )}
+      </div>
+  )
+}
+
 export function Card( { history, onNavigate, onNavigateWithNewTab }: {
   history: History,
-  onNavigate: ( url: string ) => void,
-  onNavigateWithNewTab: ( url: string ) => void
-} ) {
+  onNavigate: ( tab: Tab ) => void,
+  onNavigateWithNewTab: ( tab: Tab ) => void
+} ): React.ReactElement {
 
   const classes = useStyles()
 
   return (
       <div className={classes.card}
-           onClick={() => onNavigate( history.tab.url )}
+           onClick={() => onNavigate( history.tab )}
            onAuxClick={e => {
              if ( e.button === 1 ) {  // Middle button clicked
-               onNavigateWithNewTab( history.tab.url )
+               onNavigateWithNewTab( history.tab )
              }
            }}>
         <img src={history.objectUrl}
