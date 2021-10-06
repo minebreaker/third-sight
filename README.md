@@ -4,6 +4,8 @@ Browsing history with thumbnails
 
 This FireFox extension adds browser action button to show browsing history with thumbnails
 
+![screenshot](screenshot.png)
+
 
 ## Some design thoughts
 
