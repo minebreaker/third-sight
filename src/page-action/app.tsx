@@ -18,9 +18,12 @@ const useStyles = createUseStyles( {
       "color": "#ffffff"
     }
   },
+  header: {
+    "position": "sticky",
+    "top": 0
+  },
   messageOnly: {
-    "margin": "1em",
-    "font-size": "15px"
+    "margin": "4px 2em"
   }
 } )
 
@@ -77,8 +80,10 @@ export function App(): React.ReactElement {
 
   return (
       <div>
-        <Tab state={state} onClick={setState} />
-        <Separator />
+        <div className={classes.header}>
+          <Tab state={state} onClick={setState} />
+          <Separator />
+        </div>
         {state === "history" && (
             <HistoryView histories={histories}
                          onNavigate={openTab}
