@@ -6,6 +6,9 @@ import { CardList } from "./card"
 
 
 const useStyles = createUseStyles( {
+  message: {
+    margin: "4px 2em"
+  },
   inputWrapper: {
     "margin": "4px"
   },
@@ -52,6 +55,14 @@ export function BirdsEye( props: BirdsEyeProps ): React.ReactElement {
     inputRef.current?.focus()
   }, [ inputRef ] )
 
+  if ( _.isEmpty( tabEntries ) ) {
+    return (
+        <div className={classes.message}>
+          <p>No available tabs.</p>
+        </div>
+    )
+  }
+
   return (
       <div>
         <div className={classes.inputWrapper}>
@@ -61,9 +72,14 @@ export function BirdsEye( props: BirdsEyeProps ): React.ReactElement {
                  onChange={e => setQuery( e.target.value )}
                  placeholder="query" />
         </div>
-        <CardList histories={queriedTabEntries}
-                  onNavigate={tab => tab.id && props.onNavigate( tab.id )}
-                  onNavigateWithNewTab={_.noop} />
+        {_.isEmpty( queriedTabEntries )
+            ? <div className={classes.message}>
+              <p>No match.</p>
+            </div>
+            : <CardList histories={queriedTabEntries}
+                        onNavigate={tab => tab.id && props.onNavigate( tab.id )}
+                        onNavigateWithNewTab={_.noop} />
+        }
       </div>
   )
 }

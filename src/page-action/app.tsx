@@ -73,22 +73,20 @@ export function App(): React.ReactElement {
 
   if ( store === undefined ) {
     return <p className={classes.messageOnly}>Loading...</p>
-  } else if ( _.isEmpty( store ) ) {
-    return <p className={classes.messageOnly}>The history is empty</p>
-  } else {
-    return (
-        <div>
-          <Tab state={state} onClick={setState} />
-          <Separator />
-          {state === "history" && (
-              <HistoryView histories={histories}
-                           onNavigate={openTab}
-                           onNavigateWithNewTab={openNewTab} />
-          )}
-          {state === "birdseye" && (
-              <BirdsEye store={store} activeTab={activeTab} onNavigate={highlightTab} />
-          )}
-        </div>
-    )
   }
+
+  return (
+      <div>
+        <Tab state={state} onClick={setState} />
+        <Separator />
+        {state === "history" && (
+            <HistoryView histories={histories}
+                         onNavigate={openTab}
+                         onNavigateWithNewTab={openNewTab} />
+        )}
+        {state === "birdseye" && (
+            <BirdsEye store={store} activeTab={activeTab} onNavigate={highlightTab} />
+        )}
+      </div>
+  )
 }
