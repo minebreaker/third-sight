@@ -1,5 +1,5 @@
-import { EVENT_HIGHLIGHT, EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "./events"
-import * as store from "./store"
+import { EVENT_HIGHLIGHT, EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "./shared/events"
+import * as store from "./background/store"
 
 
 async function onNavigated( details: any ) {

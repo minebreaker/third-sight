@@ -1,20 +1,10 @@
 import { DateTime } from "luxon"
 import _ from "lodash"
+import { Store } from "../shared/store"
 
 
 const MAX_COUNT_PER_PAGE = 64
 const CLEANUP_TIMEOUT_MILLS = 60 * 1000
-
-export type Store = {
-  [tabId: number]: History[]
-}
-
-export type History = {
-  tab: Tab,
-  timestamp: number,
-  objectUrl: string,
-  faviconUrl: string
-}
 
 const store: Store = {}
 

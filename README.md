@@ -35,3 +35,4 @@ npm run build
 * Find type definitions for `browser` variable
   * Polyfills for browser extension
 * Settings page
+* Write tests

@@ -1,14 +1,14 @@
 import _ from "lodash"
 import React, { useMemo, useState } from "react"
 import { createUseStyles } from "react-jss"
-import { EVENT_HIGHLIGHT, EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "../events"
-import { Store } from "../store"
-import { getActiveTab } from "../utils"
+import { EVENT_HIGHLIGHT, EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "../shared/events"
+import { Store } from "../shared/store"
+import { getActiveTab } from "../shared/utils"
 import { BirdsEye } from "./birds-eye"
 import { HistoryView } from "./history"
 import { Separator } from "./separator"
 import { States, Tab } from "./tab"
-import { useEffectAsync } from "./use-effect-async"
+import { useEffectAsync } from "./utils"
 
 
 const useStyles = createUseStyles( {

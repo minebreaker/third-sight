@@ -1,7 +1,7 @@
 import _ from "lodash"
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import { createUseStyles } from "react-jss"
-import { History, Store } from "../store"
+import { History, Store } from "../shared/store"
 import { CardList } from "./card"
 
 

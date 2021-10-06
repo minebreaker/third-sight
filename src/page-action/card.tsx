@@ -2,7 +2,7 @@ import classNames from "classnames"
 import { DateTime } from "luxon"
 import React from "react"
 import { createUseStyles } from "react-jss"
-import { History } from "../store"
+import { History } from "../shared/store"
 
 
 const useStyles = createUseStyles( {
