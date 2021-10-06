@@ -62,15 +62,16 @@ console.debug( "adding listener" )
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 browser.runtime.onMessage.addListener( ( message: any, _sender: any ) => {
   console.debug( `message received: ${message.event}` )
-  if ( message.event === EVENT_REQUEST_HISTORY ) {
-    return onRequestHistory()
-  } else if ( message.event === EVENT_NAVIGATE ) {
-    return onNavigate( message )
-  } else if ( message.event === EVENT_HIGHLIGHT ) {
-    return onHighlight( message )
-  } else {
-    console.debug( `unknown message: ${message.event}` )
-    return Promise.resolve()
+  switch ( message.event ) {
+    case EVENT_REQUEST_HISTORY:
+      return onRequestHistory()
+    case EVENT_NAVIGATE:
+      return onNavigate( message )
+    case EVENT_HIGHLIGHT:
+      return onHighlight( message )
+    default:
+      console.debug( `unknown message: ${message.event}` )
+      return Promise.resolve()
   }
 } )
 

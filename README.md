@@ -30,10 +30,8 @@ npm run build
 
 ## TODO
 
-* Favicon
-* Visual tab list
-  * all tabs in window, all tabs across windows
 * CI
   * Nightly build
 * Find type definitions for `browser` variable
+  * Polyfills for browser extension
 * Settings page
