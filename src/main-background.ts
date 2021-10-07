@@ -82,3 +82,17 @@ browser.webNavigation.onCompleted.addListener( ( details: any ) => {
 browser.tabs.onRemoved.addListener( ( tabId: number ) => {
   return store.scheduleCleanUp( tabId )
 } )
+
+browser.runtime.onStartup.addListener( (async () => {
+  // Load all tabs into store on startup
+  const tabs = await browser.tabs.query( {} )
+  console.debug( "starting up" )
+  console.debug( tabs )
+  const promises = tabs.map( async tab => {
+    const capturedImageUrl = await browser.tabs.captureTab( tab.id )
+
+    store.save( tab, capturedImageUrl )
+  } )
+  await Promise.all( promises )
+  console.debug( "started" )
+}) )

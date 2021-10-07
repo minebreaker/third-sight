@@ -50,7 +50,8 @@ declare const browser: {
   runtime: {
     id: string,
     sendMessage: <T, R> ( message: T ) => Promise<R>,
-    onMessage: Event<<T, U, R> ( message: T, sender: U ) => R>
+    onMessage: Event<<T, U, R> ( message: T, sender: U ) => R>,
+    onStartup: Event<() => void>
   }
   sessions: {
     getRecentlyClosed: ( filter?: { maxResults?: number } ) => Promise<Session[]>,
