@@ -10,12 +10,17 @@ const useStyles = createUseStyles( {
     margin: "4px 2em"
   },
   inputWrapper: {
-    "margin": "4px"
+    "position": "sticky",
+    "top": "48px",
+    "background-color": "#4a4a4f"
+  },
+  inputBackground: {
+    "padding": "4px"
   },
   input: {
     "display": "block",
     "width": "100%",
-    "background-color": "#4a4a4f",
+    "background-color": "#38383d",
     "color": "#ffffff",
     "border": "none",
     "border-radius": "2px",
@@ -66,11 +71,13 @@ export function BirdsEye( props: BirdsEyeProps ): React.ReactElement {
   return (
       <div>
         <div className={classes.inputWrapper}>
-          <input ref={inputRef}
-                 type="text"
-                 className={classes.input}
-                 onChange={e => setQuery( e.target.value )}
-                 placeholder="query" />
+          <div className={classes.inputBackground}>
+            <input ref={inputRef}
+                   type="text"
+                   className={classes.input}
+                   onChange={e => setQuery( e.target.value )}
+                   placeholder="query" />
+          </div>
         </div>
         {_.isEmpty( queriedTabEntries )
             ? <div className={classes.message}>
