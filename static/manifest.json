@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Third Sight",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Browsing history with thumbnails",
   "icons": {},
   "permissions": [
