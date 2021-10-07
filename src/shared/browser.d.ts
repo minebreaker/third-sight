@@ -7,7 +7,7 @@ type Event<L> = {
 type Session = {
   lastModified: number,
   tab?: Tab,
-  window?: any
+  window?: unknown
 }
 
 type TabIdNone = undefined
@@ -33,7 +33,7 @@ type Tab = {
   isArticle: boolean,
   isInReaderMode: boolean,
   lastAccessed: number,
-  mutedInfo?: any,
+  mutedInfo?: unknown,
   openerTabId?: number,
   pinned?: boolean,
   selected: boolean,

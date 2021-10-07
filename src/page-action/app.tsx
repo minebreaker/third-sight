@@ -1,4 +1,3 @@
-import _ from "lodash"
 import React, { useMemo, useState } from "react"
 import { createUseStyles } from "react-jss"
 import { EVENT_HIGHLIGHT, EVENT_NAVIGATE, EVENT_REQUEST_HISTORY, EVENT_RESPONSE_HISTORY } from "../shared/events"
